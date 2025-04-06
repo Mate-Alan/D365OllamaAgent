@@ -2,9 +2,6 @@
 
 D365 Ollama Agent is an Azure Functions–based integration that connects Microsoft Dynamics 365 with the Ollama conversational AI platform. The solution uses the .NET 9 isolated worker model to provide a scalable and flexible environment for handling HTTP-triggered requests and processing Dynamics 365 data.
 
-> **Note:**  
-> This repository contains the main project in the **OllamaFunction** folder. An additional folder (**aFunction**) may be present from earlier iterations or samples.
-
 ## Table of Contents
 
 - [D365 Ollama Agent](#d365-ollama-agent)
@@ -16,7 +13,8 @@ D365 Ollama Agent is an Azure Functions–based integration that connects Micros
 
 ## Overview
 
-The D365 Ollama Agent project integrates Dynamics 365 with Ollama to allow users to interact with their business data using natural language queries. Built with Azure Functions using .NET 9 in the isolated worker mode, the solution is designed for:
+The D365 Ollama Agent project integrates Dynamics 365 with Ollama to allow users to automatically categorize service cases based on a list of available categories in the CRM-system. This project does not have the goal to be a production ready repository. It is more about discovering possibilities and showcase use-cases.
+
 - Rapid development and testing
 - Scalable, serverless deployment on Azure
 - Clean separation between the function runtime and business logic
@@ -59,7 +57,7 @@ The D365 Ollama Agent project integrates Dynamics 365 with Ollama to allow users
    ```bash
    git clone https://github.com/Mate-Alan/D365OllamaAgent.git
    cd D365OllamaAgent/OllamaFunction
-   
+
 
 1. az login
 2. az group list
