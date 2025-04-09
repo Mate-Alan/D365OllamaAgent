@@ -85,7 +85,7 @@ namespace Proximate.LLM
                 ""categories"": [""Category1"", ""Category2""]
             }}
 
-            ich benötige nur das Json zurück. Keine Erklärung oder sonstiges.
+            Ich benötige nur das Json zurück. Keine Erklärung oder sonstiges.
             ";
         }
     }

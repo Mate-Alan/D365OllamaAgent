@@ -5,7 +5,8 @@ using Microsoft.Xrm.Sdk.Query;
 
 public interface ICrmDataAccess
 {
-    Entity GetCaseById(Guid id);    List<Entity> GetCategories();
+    Entity GetCaseById(Guid id);
+    List<Entity> GetCategories();
 }
 
 public class CrmDataAccess : ICrmDataAccess
@@ -20,7 +21,7 @@ public class CrmDataAccess : ICrmDataAccess
 
     public Entity GetCaseById(Guid id)
     {
-        if(id == Guid.Empty)
+        if (id == Guid.Empty)
         {
             throw new ArgumentException("Id cannot be empty");
         }
@@ -34,5 +35,24 @@ public class CrmDataAccess : ICrmDataAccess
         query.ColumnSet = new ColumnSet("pmate_name");
 
         return _organizationService.RetrieveMultiple(query).Entities.ToList();
+    }
+
+    public void AssociateEntities(
+    string primaryEntityLogicalName,
+    Guid primaryId,
+    string relatedEntityLogicalName,
+    Guid relatedId,
+    string relationshipSchemaName)
+    {
+        EntityReference relatedEntityRef = new EntityReference(relatedEntityLogicalName, relatedId);
+
+        Relationship relationship = new Relationship(relationshipSchemaName);
+
+        EntityReferenceCollection relatedEntities = new EntityReferenceCollection
+        {
+            relatedEntityRef
+        };
+
+        _organizationService.Associate(primaryEntityLogicalName, primaryId, relationship, relatedEntities);
     }
 }

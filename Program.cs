@@ -7,7 +7,9 @@ var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
-builder.Services.AddChatClient(new OllamaChatClient(new Uri("http://20.126.162.239:11434"), "phi3.5"));
+var ollamaUrl = Environment.GetEnvironmentVariable("OllamaURl");
+
+builder.Services.AddChatClient(new OllamaChatClient(new Uri(ollamaUrl), "phi3.5"));
 builder.Services.AddFunctionDependencies(); 
 
 
