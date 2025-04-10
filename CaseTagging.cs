@@ -25,7 +25,7 @@ namespace Proximate.LLM
             _logger = logger;
             _chatClient = chatClient;
             _crmDataAccess = crmDataAccess;
-            _organizationService = (ServiceClient) organizationService;
+            _organizationService = (ServiceClient)organizationService;
         }
 
         [Function("CaseTagging")]
@@ -63,10 +63,26 @@ namespace Proximate.LLM
 
             _logger.LogInformation($"Chat completion: {chatCompletion}");
 
+            if (chatCompletion.Result != null && chatCompletion.Result.Categories.Count > 0)
+            {
+                foreach (var category in chatCompletion.Result.Categories)
+                {
+                    var crmCategory = categories.FirstOrDefault(c => c["pmate_name"].ToString() == category);
+
+                    _crmDataAccess.AssociateEntities(
+                        "incident",
+                        serviceCase.Id,
+                        "pmate_category",
+                        crmCategory.Id,
+                        "incident_pmate_category"
+                    );
+                }
+            }
+
             return new OkObjectResult(chatCompletion.Result);
         }
 
-        private static string GeneratePrompt(Entity serviceCase, List<Entity> categories)
+        private string GeneratePrompt(Entity serviceCase, List<Entity> categories)
         {
             return @$"Nachfolgend erhältst du zum einen den Inhalt einer Serviceanfrage aus einem CRM-System und zum anderen 
             mögliche Kategorien mit denen die Anfrage getaggt werden soll. Deine Aufgabe ist es, die Anfrage mit den passenden Kategorien zu taggen.
@@ -85,7 +101,7 @@ namespace Proximate.LLM
                 ""categories"": [""Category1"", ""Category2""]
             }}
 
-            Ich benötige nur das Json zurück. Keine Erklärung oder sonstiges.
+            Ich benötige immer nur das Json zurück. Keine Erklärung oder sonstiges.
             ";
         }
     }

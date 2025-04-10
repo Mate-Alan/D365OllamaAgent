@@ -7,6 +7,13 @@ public interface ICrmDataAccess
 {
     Entity GetCaseById(Guid id);
     List<Entity> GetCategories();
+
+    void AssociateEntities(
+    string primaryEntityLogicalName,
+    Guid primaryId,
+    string relatedEntityLogicalName,
+    Guid relatedId,
+    string relationshipSchemaName);
 }
 
 public class CrmDataAccess : ICrmDataAccess
