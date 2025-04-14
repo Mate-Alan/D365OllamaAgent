@@ -74,7 +74,7 @@ namespace Proximate.LLM
                         serviceCase.Id,
                         "pmate_category",
                         crmCategory.Id,
-                        "incident_pmate_category"
+                        "pmate_Category_Incident"
                     );
                 }
             }
